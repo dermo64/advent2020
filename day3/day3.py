@@ -14,7 +14,7 @@ def num_trees(input, move):
     return count
 
 with open(sys.argv[1]) as f:
-    input = [list(line.strip()) for line in f.readlines()]
+    input = [line.strip() for line in f.readlines()]
 #Part 1
 print(num_trees(input, (1,3)))
 #Part 2
