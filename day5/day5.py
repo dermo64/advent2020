@@ -14,5 +14,4 @@ with open(sys.argv[1]) as f:
     print(max(seat_ids))
 
     #Part 2
-    seat_nums = [seat_id for seat_id in input]
-    print((set(range(min(seat_nums), max(seat_nums) + 1)) - set(seat_nums)).pop())
+    print((set(range(min(seat_ids), max(seat_ids) + 1)) - set(seat_ids)).pop())
