@@ -6,14 +6,10 @@ import string
 def seatid_to_num(seat):
     return int(''.join(['1' if digit == 'B' or digit == 'R' else '0' for digit in seat]), 2)
 
-def num_to_row(num):
-    return (num &  ~7) >> 3
-
 def get_seatid(seat):
-    row = num_to_row(seat)
+    row = (seat &  ~7) >> 3
     col = seat & 7
     return (row * 8) + col
-
 
 with open(sys.argv[1]) as f:
     input = [seatid_to_num(line.strip()) for line in f.readlines()]
