@@ -9,7 +9,7 @@ def num_trees(input, move):
     while row < len(input):
         if input[row][column % len(input[row])] == '#':
             count += 1
-        row  += move[0]
+        row += move[0]
         column += move[1]
     return count
 
