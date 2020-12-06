@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-import string
 
 def seatid_to_num(seat):
     return int(''.join(['1' if digit == 'B' or digit == 'R' else '0' for digit in seat]), 2)
