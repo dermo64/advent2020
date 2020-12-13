@@ -21,8 +21,8 @@ while solved < len(bus_tuples) - 1:
         if (i + bus[1]) % bus[0] != 0:
             break
         if solved < num:
-                solved += 1
-                step = step * bus[0]
+            solved += 1
+            step = step * bus[0]
 print(i)
 
 
