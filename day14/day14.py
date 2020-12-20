@@ -1,31 +1,45 @@
 #!/usr/bin/env python
 import sys
+import re
 
 with open(sys.argv[1]) as f:
-    depart = int(f.readline().strip())
-    busses = f.readline().strip().split(',')
-#Part 1
-tups = [(int(t), int(t) - depart % int(t)) for t in busses if t != 'x']
-bus = min(tups, key=lambda x:x[1])
-print(bus[0] * bus[1])
-
-#Part2
-#Tuple with bus id and offset
-bus_tuples = [(int(bus), i) for i, bus in enumerate(busses) if bus != "x"]
-step = int(bus_tuples[0][0])
-i = 0
-solved = 0
-while solved < len(bus_tuples)-1:
-    i += step
-    for num, bus in enumerate(bus_tuples):
-        if (i + bus[1]) % bus[0] == 0:
-            if solved < num:
-                solved += 1
-                step = step * bus[0]
+    input = [line for line in f]
+    and_mask = 0
+    or_mask = 0
+    mem = {}
+    mem2 = {}
+    for line in input:
+        m = re.match(r'^mask = ([10X]+)', line)
+        if m != None:
+            mask = m.group(1)
+            and_mask = int(mask.replace('X','1'), 2)
+            or_mask = int(mask.replace('X','0'), 2)
         else:
-            break
-print(i)
+            #part1
+            m = re.match(r'^mem\[(\d+)\] = (\d+)', line)
+            location = int(m.group(1))
+            val = int(m.group(2))
+            mem[location] = (val & and_mask) | or_mask
 
+            #part2
+      #      print(f'{location:>036b}')
+       #     print(f'{or_mask:>036b}')
+            location = location | or_mask
+
+            bits = mask.count('X')
+            for i in range(2**bits):
+                loc = list(f'{location:>036b}')
+                floats = f'{i:>b}'.rjust(bits, "0")
+              #  print(floats)
+                for j, char in enumerate(mask):
+                    if char == 'X':
+                        loc[j] = floats[0]
+                        floats = floats[1:]
+                mem2[(int(''.join(loc),2))] = val
+
+    print(sum(mem.values()))
+
+    print(sum(mem2.values()))
 
 
 
